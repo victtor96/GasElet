@@ -1,0 +1,380 @@
+@import "./Home.css";
+
+.energy-year-select {
+  min-width: 170px;
+  max-width: 100%;
+}
+
+.energy-generator-card {
+  margin-top: 8px;
+}
+
+.energy-generator-header h3 {
+  margin: 0;
+  color: var(--text-main);
+}
+
+.energy-generator-header p {
+  margin: 4px 0 0;
+  color: var(--text-muted);
+}
+
+.energy-template-row {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.energy-generator-form {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.energy-generator-actions {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.energy-generator-list-wrap {
+  margin-top: 14px;
+  border: 1px solid var(--border-map);
+  border-radius: 12px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.energy-generator-list {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+}
+
+.energy-generator-list thead th {
+  background: #eef6f0;
+  color: var(--text-main);
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid #dfe9e3;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.energy-generator-list tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f0f4f1;
+  color: #0f241b;
+}
+
+.energy-generator-list tbody tr:hover {
+  background: #f7fbf7;
+}
+
+.energy-generator-list tbody tr.is-selected {
+  background: #e9f6eb;
+}
+
+.energy-empty {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.energy-empty h3 {
+  margin: 0 0 8px;
+  color: var(--text-main);
+}
+
+.energy-empty p {
+  color: var(--text-muted);
+}
+
+.energy-compare-card {
+  margin-top: 16px;
+}
+
+.energy-compare-empty {
+  margin-top: 10px;
+  color: var(--text-muted);
+}
+
+.energy-compare-chart-wrap {
+  margin-top: 12px;
+  width: 100%;
+  height: 320px;
+  border: 1px solid var(--border-map);
+  border-radius: 12px;
+  padding: 8px 8px 2px;
+  background: #fcfefd;
+}
+
+.energy-compare-table-wrap {
+  margin-top: 14px;
+  border: 1px solid var(--border-map);
+  border-radius: 12px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.energy-compare-table {
+  width: 100%;
+  min-width: 1080px;
+  border-collapse: collapse;
+}
+
+.energy-compare-table thead th {
+  background: #eef6f0;
+  color: var(--text-main);
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid #dfe9e3;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.energy-compare-table tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f0f4f1;
+  color: #0f241b;
+}
+
+.energy-compare-table tbody tr:hover {
+  background: #f7fbf7;
+}
+
+.energy-metrics-row {
+  margin-top: 18px;
+}
+
+.energy-grid {
+  margin-top: 18px;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.energy-map-main-card {
+  grid-column: span 8;
+}
+
+.energy-city-card {
+  grid-column: span 4;
+}
+
+.energy-homes-input-card {
+  grid-column: span 4;
+}
+
+.energy-homes-chart-card {
+  grid-column: span 8;
+}
+
+.energy-total-card h3,
+.energy-city-card h3 {
+  margin: 0 0 10px;
+  color: var(--text-main);
+}
+
+.energy-homes-input-card h3,
+.energy-homes-chart-card h3 {
+  margin: 0 0 10px;
+  color: var(--text-main);
+}
+
+.energy-total-chart-wrap {
+  width: 100%;
+  height: 360px;
+  border: 1px solid var(--border-map);
+  border-radius: 12px;
+  padding: 8px 8px 2px;
+  background: #fcfefd;
+}
+
+.energy-city-chart-wrap {
+  width: 100%;
+  height: clamp(320px, 60vh, 460px);
+  border: 1px solid var(--border-map);
+  border-radius: 12px;
+  padding: 8px 8px 2px;
+  background: #fcfefd;
+}
+
+.energy-homes-chart-wrap {
+  width: 100%;
+  height: 320px;
+  border: 1px solid var(--border-map);
+  border-radius: 12px;
+  padding: 8px 8px 2px;
+  background: #fcfefd;
+}
+
+.energy-homes-help {
+  margin: 0 0 12px;
+  color: var(--text-muted);
+}
+
+.energy-home-summary {
+  margin-top: 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  background: #fff;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--text-main);
+}
+
+.energy-home-summary span {
+  color: var(--text-muted);
+}
+
+.energy-home-summary strong {
+  color: var(--primary);
+  font-size: 1.05rem;
+}
+
+.energy-map-card {
+  margin-top: 18px;
+}
+
+.energy-map-card.energy-map-main-card {
+  margin-top: 0;
+}
+
+.energy-map-card h3 {
+  margin: 0;
+  color: var(--text-main);
+}
+
+.energy-map-layout {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
+  gap: 14px;
+  align-items: stretch;
+}
+
+.energy-map-shell {
+  min-height: 420px;
+}
+
+.energy-map-shell .map-wrap {
+  height: 100%;
+  min-height: 420px;
+}
+
+.energy-city-info {
+  border: 1px solid var(--border-map);
+  border-radius: var(--radius-md);
+  background: var(--bg-soft);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.energy-city-info h4 {
+  margin: 0;
+  color: var(--text-main);
+}
+
+.energy-city-info p {
+  color: var(--text-muted);
+}
+
+.energy-city-info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.energy-city-name {
+  margin: 0;
+  color: var(--primary);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.energy-city-stat {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  background: #fff;
+  padding: 10px;
+}
+
+.energy-city-stat span {
+  color: var(--text-muted);
+}
+
+.energy-city-stat strong {
+  color: var(--text-main);
+}
+
+@media (max-width: 1180px) {
+  .energy-map-main-card,
+  .energy-city-card,
+  .energy-homes-input-card,
+  .energy-homes-chart-card {
+    grid-column: span 12;
+  }
+}
+
+@media (max-width: 980px) {
+  .energy-generator-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .energy-map-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .energy-year-select {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .energy-generator-form {
+    grid-template-columns: 1fr;
+  }
+
+  .energy-template-row .btn-secondary {
+    width: 100%;
+  }
+
+  .energy-generator-actions .btn-primary,
+  .energy-generator-actions .btn-secondary {
+    width: 100%;
+  }
+
+  .energy-compare-chart-wrap {
+    height: 280px;
+  }
+
+  .energy-total-chart-wrap {
+    height: 280px;
+  }
+
+  .energy-city-chart-wrap {
+    height: 340px;
+  }
+
+  .energy-homes-chart-wrap {
+    height: 280px;
+  }
+
+  .energy-map-shell,
+  .energy-map-shell .map-wrap {
+    min-height: 300px;
+  }
+}

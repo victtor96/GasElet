@@ -1,0 +1,18 @@
+{
+  "listeners": [
+    { "address": "0.0.0.0", "port": 7080, "https": false }
+  ],
+  "document_root": "/home/victor/code/aterro_web/client/dist/",
+  "static": {
+    "enable_static_file": true,
+    "gzip": true,
+    "brotli": false,
+    "index_files": ["index.html"]
+  },
+  "app": {
+    "threads_num": 0,
+    "log_path": "./",
+    "loglevel": "INFO",
+    "use_sendfile": true
+  }
+}

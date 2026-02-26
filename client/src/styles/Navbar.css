@@ -1,0 +1,338 @@
+:root {
+  --grad-top: #005e2a;
+  --grad-bottom: #002d14;
+  --text: #d4fce2;
+  --text-soft: #9fd8b3;
+}
+
+.nav-container {
+  position: fixed;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3000;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 78px;
+  height: 85vh;
+  border-radius: 1.25rem;
+  padding: 0.85rem 0.5rem;
+  background: linear-gradient(180deg, var(--grad-top), var(--grad-bottom));
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  will-change: width, box-shadow;
+  transition: width 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.navbar:hover {
+  width: 312px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.24);
+}
+
+.nav-top {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-icons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.42rem;
+}
+
+.nav-btn {
+  color: var(--text);
+  text-decoration: none;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  min-height: 44px;
+  border-radius: 10px;
+  padding: 0;
+  position: relative;
+  opacity: 0.88;
+  transition: background-color 220ms ease, opacity 220ms ease;
+}
+
+.nav-btn:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.11);
+}
+
+.nav-btn.active {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.nav-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.nav-icon {
+  min-width: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+}
+
+.nav-label {
+  opacity: 0;
+  transform: translateX(-6px);
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 0.92rem;
+  transition: opacity 260ms ease, transform 260ms ease, max-width 260ms ease;
+}
+
+.navbar:hover .nav-btn {
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 0 10px;
+}
+
+.navbar:hover .nav-label {
+  opacity: 1;
+  transform: translateX(0);
+  max-width: 210px;
+}
+
+.nav-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 0.42rem;
+}
+
+.nav-btn.small .nav-icon {
+  font-size: 1.24rem;
+}
+
+.nav-user-btn {
+  justify-content: center !important;
+  align-items: center;
+  gap: 0 !important;
+  padding: 0 !important;
+}
+
+.nav-user-btn .nav-icon {
+  min-width: 34px;
+  width: auto;
+  margin: 0;
+  justify-content: center;
+}
+
+.nav-user-btn .nav-label,
+.nav-user-btn .nav-user-role {
+  opacity: 0;
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transform: translateX(-6px);
+  transition: opacity 260ms ease, transform 260ms ease, max-width 260ms ease;
+}
+
+.navbar:hover .nav-user-btn {
+  justify-content: flex-start !important;
+  gap: 10px !important;
+  padding: 0 10px !important;
+}
+
+.navbar:hover .nav-user-btn .nav-label {
+  opacity: 1;
+  transform: translateX(0);
+  max-width: 150px;
+}
+
+.navbar:hover .nav-user-btn .nav-user-role {
+  opacity: 1;
+  transform: translateX(0);
+  max-width: 90px;
+}
+
+.nav-user-role {
+  margin-left: auto;
+  font-size: 0.73rem;
+  color: var(--text-soft);
+  opacity: 0;
+  transition: opacity 260ms ease;
+}
+
+.navbar:hover .nav-user-role {
+  opacity: 1;
+}
+
+.nav-scenario-stack {
+  opacity: 0;
+  transform: translateX(-8px);
+  max-height: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition: opacity 260ms ease, transform 260ms ease, max-height 260ms ease;
+}
+
+.navbar:hover .nav-scenario-stack {
+  opacity: 1;
+  transform: translateX(0);
+  max-height: 120px;
+  pointer-events: auto;
+}
+
+.nav-panel-label {
+  color: var(--text-soft);
+  font-size: 0.72rem;
+  margin: 0 0 4px 2px;
+  display: block;
+}
+
+.nav-scenario-stack select {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  min-height: 30px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(0, 0, 0, 0.18);
+  color: #f3fff7;
+  -webkit-text-fill-color: #f3fff7;
+  padding: 0 8px;
+  font-size: 0.82rem;
+}
+
+.nav-scenario-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-scenario-row select {
+  flex: 1;
+  min-width: 0;
+}
+
+.nav-scenario-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-scenario-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(0, 0, 0, 0.2);
+  color: #e7fff0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 200ms ease, border-color 200ms ease, opacity 200ms ease;
+}
+
+.nav-scenario-btn .material-icons {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.nav-scenario-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.32);
+}
+
+.nav-scenario-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.nav-scenario-btn.danger:hover:not(:disabled) {
+  background: rgba(220, 53, 69, 0.22);
+  border-color: rgba(220, 53, 69, 0.45);
+}
+
+.nav-scenario-stack select:disabled {
+  opacity: 1;
+  color: #cde8d6;
+  -webkit-text-fill-color: #cde8d6;
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.nav-scenario-stack select option {
+  color: #0e2f1d;
+  background: #f4fff7;
+}
+
+@media (max-width: 768px) {
+  .nav-container {
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .nav-container.nav-visible {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .navbar,
+  .navbar:hover {
+    width: 100%;
+    height: 72px;
+    border-radius: 1rem 1rem 0 0;
+    padding: 0 0.65rem;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .nav-scenario-stack {
+    display: none;
+  }
+
+  .nav-top {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .nav-icons {
+    flex-direction: row;
+    gap: 0.2rem;
+  }
+
+  .nav-bottom {
+    flex-direction: row;
+    gap: 0.2rem;
+  }
+
+  .nav-btn {
+    min-height: 40px;
+    min-width: 46px;
+    padding: 0 8px;
+    justify-content: center;
+  }
+
+  .nav-icon {
+    min-width: 32px;
+    font-size: 1.28rem;
+  }
+
+  .nav-label,
+  .navbar:hover .nav-label,
+  .nav-user-role,
+  .navbar:hover .nav-user-role {
+    display: none;
+  }
+}

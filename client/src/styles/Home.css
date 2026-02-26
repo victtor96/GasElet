@@ -1,0 +1,913 @@
+/* ===================== VARIÁVEIS DE TEMA ===================== */
+:root {
+  --bg-body: #f5f8f5;
+  --bg-card: #ffffff;
+  --bg-soft: #f7fbf7;
+  --border-soft: #e3efe6;
+  --border-map: #e4eee6;
+
+  --primary: #1b5e20;
+  --primary-dark: #2e7d32;
+  --primary-light: #e8f5e9;
+
+  --text-main: #1b3c2e;
+  --text-muted: #5f7268;
+  --text-soft: #9aa6a0;
+
+  --shadow-soft: 0 4px 10px rgba(0, 0, 0, 0.05);
+  --shadow-strong: 0 0 15px rgba(27, 94, 32, 0.4);
+
+  --radius-lg: 16px;
+  --radius-md: 14px;
+  --radius-pill: 999px;
+}
+
+/* ===================== BASE ===================== */
+html,
+body {
+  overflow-x: hidden;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+.home-container {
+  padding: 24px;
+  background: var(--bg-body);
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+  margin-left: 80px;
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+h3,
+li,
+p {
+  color: #000;
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* ===================== HEADER (se usar) ===================== */
+.home-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-soft);
+  gap: 12px;
+}
+
+.home-header h1,
+.home-header h3 {
+  margin: 0;
+  font-size: 1.6rem;
+  color: var(--text-main);
+}
+
+.home-header p {
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ===================== BOTÕES ===================== */
+.btn-primary,
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s,
+    transform 0.2s;
+  font-size: 0.9rem;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  box-shadow: 0 4px 12px rgba(27, 94, 32, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-secondary:hover {
+  background: var(--primary-light);
+}
+
+/* Botão ícone compacto (cenários) */
+.icon-btn {
+  border: 1px solid var(--border-soft);
+  background: #f4faf5;
+  border-radius: 10px;
+  padding: 6px 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.2s,
+    border-color 0.2s;
+}
+
+.icon-btn span.material-icons {
+  font-size: 18px;
+  color: var(--primary);
+}
+
+.icon-btn.primary {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.icon-btn.primary span.material-icons {
+  color: #fff;
+}
+
+.icon-btn:hover:not(:disabled) {
+  background: var(--primary-light);
+  box-shadow: 0 2px 8px rgba(27, 94, 32, 0.25);
+  transform: translateY(-1px);
+}
+
+.icon-btn.primary:hover:not(:disabled) {
+  background: var(--primary-dark);
+}
+
+.icon-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* ===================== CARDS / LAYOUT GERAL ===================== */
+.card {
+  background: var(--bg-card);
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.card.glow:hover {
+  box-shadow: var(--shadow-strong);
+  transform: translateY(-3px);
+}
+
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* ===================== TOPO: CENÁRIO + USUÁRIO ===================== */
+.top-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(220px, 0.9fr);
+  gap: 14px;
+  margin-bottom: 20px;
+  align-items: stretch;
+}
+
+/* --- Scenario Card --- */
+.scenario-card {
+  padding: 12px 14px;
+  border: 1px solid var(--border-soft);
+  background: linear-gradient(135deg, #ffffff 0%, #f7fbf8 100%);
+}
+
+.scenario-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.scenario-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scenario-icon .material-icons {
+  font-size: 18px;
+  color: var(--primary);
+}
+
+.scenario-card-header h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-main);
+}
+
+.scenario-card-header small {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.scenario-card-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.select-wrap.compact select {
+  padding: 7px 26px 7px 10px;
+  font-size: 0.85rem;
+}
+
+.scenario-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* --- Scenario error text --- */
+.scenario-error {
+  display: block;
+  margin-top: 8px;
+}
+
+/* --- User Card --- */
+.user-card {
+  padding: 12px 14px;
+  border: 1px solid var(--border-soft);
+  background: linear-gradient(135deg, #ffffff 0%, #f6fbf7 100%);
+}
+
+.user-card-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #e5f2e7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.user-avatar .material-icons {
+  font-size: 28px;
+  color: var(--primary);
+}
+
+.user-info h4 {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.user-name {
+  margin: 2px 0 6px;
+  font-weight: 600;
+  color: var(--text-main);
+  font-size: 0.95rem;
+}
+
+.user-role-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: #f2faf4;
+  border: 1px solid #c9e0cc;
+  font-size: 0.7rem;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+/* ===================== CARD EXPECTATIVA POPULACIONAL ===================== */
+.expectancy-card.two-col h3 {
+  margin-bottom: 10px;
+}
+
+.expectancy-card .expectancy-layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 14px;
+  overflow: hidden;
+  align-items: flex-start;
+}
+
+.expectancy-card .expectancy-layout > * {
+  min-width: 0;
+}
+
+/* --- Painel esquerdo (filtros) --- */
+.exp-left {
+  background: var(--bg-soft);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  height: 250px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.exp-left .exp-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.exp-left .exp-field label {
+  font-size: 0.9rem;
+  color: #375f4b;
+}
+
+/* Selects */
+.select-wrap {
+  position: relative;
+}
+
+.select-wrap select {
+  width: 100%;
+  padding: 10px 32px 10px 10px;
+  border-radius: 10px;
+  border: 1px solid #c9e0cc;
+  background: #eef7f0;
+  color: var(--text-main);
+  outline: none;
+  appearance: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+  font-size: 0.92rem;
+}
+
+.select-wrap select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(27, 94, 32, 0.15);
+  background: #f5fbf7;
+}
+
+.select-wrap .chev {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--primary);
+  font-size: 0.9rem;
+}
+
+/* Botões */
+.exp-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 2px;
+  flex-wrap: wrap;
+}
+
+/* --- Tabela à direita --- */
+.exp-right {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.exp-right .exp-table-wrap {
+  width: 100%;
+  height: 250px;
+  border: 1px solid var(--border-map);
+  border-radius: var(--radius-md);
+  background: #fff;
+  display: flex;
+  overflow: hidden;
+}
+
+.exp-scroll {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* --- Tabela --- */
+.exp-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  width: max-content;
+  min-width: 100%;
+}
+
+.exp-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #eef6f0;
+  color: var(--text-main);
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 8px 10px;
+  border-bottom: 1px solid #dfe9e3;
+  white-space: nowrap;
+}
+
+.exp-table th.col-check,
+.exp-table td.col-check {
+  width: 40px;
+  text-align: center;
+}
+
+.exp-table th.col-uf,
+.exp-table td.col-uf {
+  width: 80px;
+  text-align: center;
+}
+
+.exp-table th.col-nome,
+.exp-table td.col-nome {
+  min-width: 200px;
+  text-align: left;
+}
+
+.exp-table th.col-ano,
+.exp-table td.col-ano {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  padding-right: 10px;
+}
+
+.exp-table tbody td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #f0f4f1;
+  color: #0f241b;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.exp-table tbody tr:hover {
+  background: #f6fbf7;
+}
+
+.exp-table tbody tr.is-selected {
+  background: #e9f6eb;
+  box-shadow: inset 0 0 0 2px rgba(27, 94, 32, 0.12);
+}
+
+.exp-table input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary);
+}
+
+/* ===================== MAPA ===================== */
+.exp-map-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.25s, box-shadow 0.25s;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.exp-map-card h3 {
+  color: var(--text-main);
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.exp-map-card.glow:hover {
+  box-shadow: var(--shadow-strong);
+  transform: translateY(-3px);
+}
+
+.map-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.map-full-btn {
+  padding: 6px 10px;
+}
+
+/* Contêiner do mapa */
+.map-wrap {
+  position: relative;
+  width: 100%;
+  height: 360px;
+  min-height: 260px;
+  border: 1px solid var(--border-map);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.map-el {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Mapa fullscreen overlay */
+.exp-map-card.is-fullscreen {
+  position: fixed;
+  inset: 16px;
+  z-index: 1000;
+  background: #fff;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  width: calc(100vw - 32px);
+  height: calc(100vh - 32px);
+}
+
+.exp-map-card.is-fullscreen .map-wrap {
+  height: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Mensagens overlay no mapa */
+.map-loading,
+.map-error {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  color: var(--text-main);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.map-error {
+  color: #b3261e;
+}
+
+/* ===================== MÉTRICAS ABAIXO DO MAPA ===================== */
+.exp-metrics-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.exp-metric-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: 16px 14px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.exp-metric-card h3 {
+  margin: 0 0 4px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.exp-metric-card .exp-mini-content {
+  margin-top: 6px;
+}
+
+.exp-icon {
+  font-size: 2rem;
+  color: var(--primary);
+}
+
+.exp-text h2 {
+  font-size: 1.9rem;
+  margin: 0;
+  color: var(--primary);
+}
+
+.exp-text p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--primary);
+}
+
+.green-text {
+  color: var(--primary);
+}
+
+/* ===================== INDICADORES + PIE (SE AINDA USAR) ===================== */
+.exp-indicators-row {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 16px;
+  margin-top: 20px;
+  align-items: start;
+}
+
+.exp-cards-column {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* --- Mini Cards genéricos (se reaproveitar) --- */
+.exp-mini-card {
+  position: relative;
+  background: #fff;
+  border-radius: var(--radius-md);
+  padding: 20px 16px 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.exp-mini-card h3 {
+  position: absolute;
+  top: 10px;
+  left: 16px;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  text-align: left;
+}
+
+.exp-mini-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.exp-mini-card.glow:hover {
+  box-shadow: var(--shadow-strong);
+  transform: translateY(-3px);
+}
+
+/* --- Linha de gráficos (75% / 25%) --- */
+.exp-charts-row {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+  align-items: stretch;
+}
+
+.exp-charts-row > * {
+  min-width: 0;
+}
+
+/* --- Pie Card --- */
+.exp-pie-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.25s, box-shadow 0.25s;
+  display: flex;
+  flex-direction: column;
+  margin-top: 0;
+}
+
+.exp-pie-card h3 {
+  color: var(--text-main);
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.exp-chart-wrapper,
+.exp-chart {
+  position: relative;
+  width: 100%;
+  height: 340px;
+  min-height: 260px;
+}
+
+.exp-chart-empty {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-soft);
+  font-weight: 600;
+}
+
+.exp-pie-card.glow:hover {
+  box-shadow: var(--shadow-strong);
+  transform: translateY(-3px);
+}
+
+/* --- Legenda Mobile (dentro do card) --- */
+.exp-chart-legend-mobile {
+  display: none;
+}
+
+/* ===================== LINE CHART (POP TOTAL) ===================== */
+.exp-line-card {
+  margin-top: 0;
+}
+
+.exp-line-card h3 {
+  margin-bottom: 10px;
+  color: var(--text-main); /* antes estava branco, sumia no fundo */
+  font-weight: 700;
+  text-align: center;
+}
+
+.exp-line-card .home-line-chart-wrap {
+  width: 100%;
+  height: 340px;
+}
+
+/* ===================== RESPONSIVO ===================== */
+@media (max-width: 1180px) {
+  .top-row {
+    grid-template-columns: 1.4fr 1fr;
+  }
+}
+
+@media (max-width: 980px) {
+  .expectancy-card .expectancy-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .home-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .header-actions {
+    width: 100%;
+  }
+
+  .header-actions .btn-primary,
+  .header-actions .btn-secondary {
+    flex: 1 1 170px;
+  }
+
+  .header-actions .select-wrap {
+    min-width: 0;
+  }
+
+  .header-actions .select-wrap.compact {
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .exp-charts-row {
+    grid-template-columns: 1fr;
+  }
+
+  .exp-right .exp-table-wrap {
+    height: 200px;
+  }
+
+  .top-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-container {
+    margin-left: 0;
+    padding: 16px;
+    padding-bottom: calc(88px + env(safe-area-inset-bottom));
+  }
+
+  .home-header h1,
+  .home-header h3 {
+    font-size: 1.3rem;
+  }
+
+  .map-wrap {
+    height: 300px;
+  }
+
+  .exp-left {
+    height: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .exp-actions .btn-primary,
+  .exp-actions .btn-secondary {
+    width: 100%;
+  }
+
+  .exp-line-card .home-line-chart-wrap {
+    height: 260px;
+  }
+
+  .exp-metrics-row {
+    grid-template-columns: 1fr;
+  }
+
+  .exp-indicators-row {
+    grid-template-columns: 1fr;
+  }
+
+  .exp-chart-wrapper,
+  .exp-chart {
+    height: 280px;
+  }
+
+  .exp-chart-legend-mobile {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+    padding: 8px 4px;
+    max-height: 90px;
+    overflow-y: auto;
+    border-top: 1px solid var(--border-map);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: var(--text-main);
+    overflow: hidden;
+  }
+
+  .legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .legend-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 560px) {
+  .header-actions .btn-primary,
+  .header-actions .btn-secondary {
+    width: 100%;
+  }
+
+  .home-header p {
+    font-size: 0.92rem;
+  }
+}

@@ -1,0 +1,259 @@
+@import "./Home.css";
+
+.charts-year-select {
+  min-width: 170px;
+  max-width: 100%;
+}
+
+.charts-empty {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.charts-empty h3 {
+  margin: 0 0 8px;
+  color: var(--text-main);
+}
+
+.charts-empty p {
+  color: var(--text-muted);
+}
+
+.charts-period-chip {
+  margin: 4px 0 10px;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-soft);
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  max-width: 100%;
+}
+
+.charts-metrics-row {
+  margin-top: 8px;
+}
+
+.charts-compare-card {
+  margin-top: 12px;
+}
+
+.charts-compare-header h3 {
+  margin: 0;
+  color: var(--text-main);
+}
+
+.charts-compare-header p {
+  margin: 6px 0 0;
+  color: var(--text-muted);
+}
+
+.charts-compare-controls {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.charts-compare-controls .select-wrap {
+  min-width: 260px;
+  max-width: 100%;
+}
+
+.charts-compare-tags {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.charts-compare-empty {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.charts-compare-tag {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.charts-compare-tag.is-active {
+  border-color: var(--primary);
+}
+
+.charts-compare-tag-main {
+  border: 0;
+  background: transparent;
+  color: var(--text-main);
+  padding: 7px 10px;
+  cursor: pointer;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.charts-compare-tag-remove {
+  border: 0;
+  border-left: 1px solid var(--border-soft);
+  background: transparent;
+  color: #b3261e;
+  padding: 7px 9px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.charts-grid {
+  margin-top: 18px;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.charts-total-card {
+  grid-column: span 12;
+}
+
+.charts-total-card h3 {
+  margin: 0 0 10px;
+  color: var(--text-main);
+}
+
+.charts-total-chart-wrap {
+  width: 100%;
+  height: 360px;
+}
+
+.charts-map-card {
+  margin-top: 18px;
+}
+
+.charts-map-card h3 {
+  margin: 0;
+  color: var(--text-main);
+}
+
+.charts-map-layout {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
+  gap: 14px;
+  align-items: stretch;
+}
+
+.charts-map-shell {
+  min-height: 420px;
+}
+
+.charts-map-shell .map-wrap {
+  height: 100%;
+  min-height: 420px;
+}
+
+.charts-map-shell .map-loading,
+.charts-map-shell .map-error {
+  pointer-events: none;
+  z-index: 450;
+}
+
+.charts-city-info {
+  border: 1px solid var(--border-map);
+  border-radius: var(--radius-md);
+  background: var(--bg-soft);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.charts-city-info h4 {
+  margin: 0;
+  color: var(--text-main);
+}
+
+.charts-city-info p {
+  color: var(--text-muted);
+}
+
+.charts-city-info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.charts-city-name {
+  margin: 0;
+  color: var(--primary);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.charts-city-stat {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  background: #fff;
+  padding: 10px;
+}
+
+.charts-city-stat span {
+  color: var(--text-muted);
+}
+
+.charts-city-stat strong {
+  color: var(--text-main);
+}
+
+@media (max-width: 980px) {
+  .charts-map-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .charts-year-select {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .charts-compare-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .charts-compare-controls .select-wrap {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .charts-compare-controls .btn-secondary {
+    width: 100%;
+  }
+
+  .charts-compare-tag {
+    max-width: 100%;
+  }
+
+  .charts-compare-tag-main {
+    max-width: calc(100vw - 170px);
+  }
+
+  .charts-total-chart-wrap {
+    height: 280px;
+  }
+
+  .charts-map-shell,
+  .charts-map-shell .map-wrap {
+    min-height: 300px;
+  }
+}

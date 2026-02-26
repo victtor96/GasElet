@@ -1,0 +1,30 @@
+# OS / Editors
+.DS_Store
+.idea/
+*.swp
+*.swo
+
+# Root env
+.env
+.env.*
+!.env.example
+
+# Frontend
+client/node_modules/
+client/dist/
+client/dist-ssr/
+client/cookies.txt
+client/*.log
+
+# Backend build artifacts
+server/build/
+server/*.log
+
+# Local runtime data (credentials/dashboards)
+server/Dados/users/
+
+# CMake leftovers
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile

@@ -1,0 +1,374 @@
+@import "./Home.css";
+
+/* =========================================================
+   DISTRIBUIÇÃO IGUAL À IMAGEM (sem alterar seu CSS base)
+========================================================= */
+
+.home-grid.rsu-grid {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-auto-rows: minmax(140px, auto);
+  gap: 18px;
+  grid-template-areas:
+    "config config config config config config config config table table table table"
+    "comp comp comp comp comp comp comp comp table table table table"
+    "chart chart chart chart chart chart chart chart chart chart chart chart";
+}
+
+/* Áreas (layout) */
+.rsu-config-card { grid-area: config; }
+.rsu-tableCard { grid-area: table; }
+.rsu-comp      { grid-area: comp; }
+.rsu-chart     { grid-area: chart; }
+
+.rsu-tableCard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 420px;
+}
+
+/* Responsivo: empilha e mantém ordem lógica */
+@media (max-width: 1200px) {
+  .home-grid.rsu-grid {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    grid-template-areas:
+      "config config config config config config config config"
+      "table table table table table table table table"
+      "comp comp comp comp comp comp comp comp"
+      "chart chart chart chart chart chart chart chart";
+  }
+
+  .rsu-tableCard {
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .home-grid.rsu-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "config"
+      "table"
+      "comp"
+      "chart";
+  }
+}
+
+/* Cabeçalho “Característica do Aterro” */
+.rsu-main-title {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-main);
+  text-align: center;
+}
+
+.rsu-section-title {
+  margin: 0 0 12px 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: 0.01em;
+}
+
+/* Form compacto e moderno */
+.rsu-form {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.rsu-form.two-cols {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+@media (max-width: 900px) {
+  .rsu-form,
+  .rsu-form.two-cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field label {
+  display: block;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 6px;
+  min-height: 2.4em;
+  line-height: 1.2;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  padding: 10px 12px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid #c9e0cc;
+  background: #eef7f0;
+  color: var(--text-main);
+  outline: none;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(27, 94, 32, 0.12);
+  background: #f5fbf7;
+}
+
+.field-inline {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 480px) {
+  .field-inline {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Composição (parecido com a imagem, mais organizado) */
+.rsu-comp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+  align-items: stretch;
+  grid-auto-flow: row dense;
+}
+
+@media (max-width: 1024px) {
+  .rsu-comp-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .rsu-comp-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+}
+
+.rsu-comp-actions {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  align-items: stretch;
+  width: 100%;
+  justify-self: stretch;
+  align-self: end;
+  grid-column: 1 / -1;
+}
+
+.rsu-comp-actions .btn-primary,
+.rsu-comp-actions .btn-secondary {
+  width: 100%;
+  min-height: 56px;
+}
+
+.rsu-comp-actions .rsu-sum {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 56px;
+  margin: 0;
+  overflow-wrap: break-word;
+  word-break: normal;
+  line-height: 1.25;
+}
+
+.rsu-comp-actions > * {
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .rsu-comp-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    justify-self: stretch;
+    grid-column: 1 / -1;
+  }
+
+  .rsu-comp-actions .btn-primary,
+  .rsu-comp-actions .btn-secondary {
+    min-height: 52px;
+  }
+}
+
+@media (max-width: 520px) {
+  .rsu-comp-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rsu-sum {
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: var(--bg-card);
+  color: var(--text-main);
+  font-size: 0.95rem;
+}
+
+.rsu-sum.ok   { border-color: rgba(27, 94, 32, 0.35); }
+.rsu-sum.warn { border-color: rgba(239, 108, 0, 0.35); }
+
+.rsu-lo-unit {
+  margin-left: 6px;
+  white-space: nowrap;
+}
+
+.rsu-comp {
+  overflow: hidden;
+}
+
+/* Tabela como no mock: scroll interno e header fixo */
+.table-wrap {
+  border: 1px solid var(--border-map);
+  border-radius: 12px;
+  overflow: auto;
+  max-height: 520px;
+  background: var(--bg-card);
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+.rsu-form .field,
+.rsu-comp-grid .field {
+  min-width: 0;
+}
+
+.rsu-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 420px;
+}
+
+.rsu-table thead th {
+  position: sticky;
+  top: 0;
+  background: #eef6f0;
+  z-index: 1;
+  text-align: left;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  border-bottom: 1px solid #dfe9e3;
+}
+
+.rsu-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f0f4f1;
+  color: #0f241b;
+  font-size: 0.95rem;
+}
+
+.rsu-table tr:hover td {
+  background: #f7fbf7;
+}
+
+.rsu-chart-container {
+  width: 100%;
+  height: clamp(240px, 32vw, 380px);
+  min-height: 240px;
+  background: #f8fcf8;
+  border: 1px solid var(--border-map);
+  border-radius: var(--radius-md);
+  padding: 8px;
+}
+
+.rsu-config-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rsu-config-header {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.rsu-config-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.rsu-config-col {
+  min-width: 0;
+}
+
+.rsu-config-col .rsu-form {
+  align-content: start;
+}
+
+@media (max-width: 980px) {
+  .rsu-config-header,
+  .rsu-config-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.orange-text {
+  color: #ef6c00;
+}
+
+/* =========================================================
+   GARANTE QUE O NIVO APAREÇA
+   (seu CSS tem "display:flexbox" inválido; aqui corrigimos)
+========================================================= */
+
+.chart-container {
+  display: flex;              /* override seguro */
+  width: 100%;
+  min-height: 360px;          /* garante altura para o ResponsiveLine */
+  height: 360px;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .chart-container {
+    height: 260px;
+    min-height: 260px;
+  }
+
+  .rsu-chart-container {
+    height: 240px;
+    padding: 4px;
+  }
+
+  .rsu-tableCard {
+    min-height: 320px;
+  }
+}
+
+@media (max-width: 520px) {
+  .table-wrap {
+    max-height: 360px;
+  }
+
+  .rsu-form,
+  .rsu-form.two-cols {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+
+  .rsu-table {
+    min-width: 360px;
+  }
+
+  .rsu-chart-container {
+    height: 220px;
+    padding: 2px;
+  }
+}
+
+.rsu-chartBox {
+  /* evita que o card “empurre” o gráfico em flex column */
+  flex-grow: 1;
+}
