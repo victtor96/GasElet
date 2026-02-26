@@ -28,3 +28,6 @@ CMakeCache.txt
 CMakeFiles/
 cmake_install.cmake
 Makefile
+
+# certificados locais (NÃO COMMITAR)
+server/certs/

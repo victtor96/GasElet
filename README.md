@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+# GasElet
+=======
 # Gaselet
 
 [![Status](https://img.shields.io/badge/status-active-success)](#)
@@ -119,10 +122,6 @@ npm run build
 - Contribuição: [CONTRIBUTING.md](./CONTRIBUTING.md)
 - Histórico de mudanças: [CHANGELOG.md](./CHANGELOG.md)
 
-## Resumo para Portfólio e LinkedIn
-
-Projeto full stack de engenharia aplicada a sustentabilidade urbana, com backend em C++ (Drogon), autenticação JWT, persistência por usuário e dashboards React para análise de RSU, metano e potencial elétrico por cenário.  
-Principais entregas: arquitetura cliente-servidor, modelagem analítica de dados, integração geoespacial e foco em segurança operacional (cadastro local, cookies HttpOnly, separação de rotas públicas/protegidas).
 
 ## Roadmap
 
@@ -134,3 +133,4 @@ Principais entregas: arquitetura cliente-servidor, modelagem analítica de dados
 ## Licença
 
 Este projeto está sob licença MIT. Veja [LICENSE](./LICENSE).
+>>>>>>> f42503e (init)
