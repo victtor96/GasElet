@@ -1,6 +1,5 @@
-<<<<<<< HEAD
+
 # GasElet
-=======
 # Gaselet
 
 [![Status](https://img.shields.io/badge/status-active-success)](#)
@@ -133,4 +132,3 @@ npm run build
 ## Licença
 
 Este projeto está sob licença MIT. Veja [LICENSE](./LICENSE).
->>>>>>> f42503e (init)
