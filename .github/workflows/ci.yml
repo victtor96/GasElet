@@ -59,7 +59,7 @@ jobs:
             pkg-config \
             libssl-dev \
             libjsoncpp-dev \
-            libxcrypt-dev \
+            libcrypt-dev \
             libdrogon-dev
 
       - name: Configure CMake
