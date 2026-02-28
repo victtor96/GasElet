@@ -60,6 +60,8 @@ jobs:
             libssl-dev \
             libjsoncpp-dev \
             libcrypt-dev \
+            uuid-dev \
+            libz-dev \
             libdrogon-dev
 
       - name: Configure CMake
