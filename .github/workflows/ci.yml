@@ -66,6 +66,7 @@ jobs:
             libpq-dev \
             libmariadb-dev \
             libmariadb-dev-compat \
+            libbrotli-dev \
             libdrogon-dev
 
       - name: Configure CMake
