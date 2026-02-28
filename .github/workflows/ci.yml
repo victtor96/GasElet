@@ -62,7 +62,10 @@ jobs:
             libcrypt-dev \
             uuid-dev \
             libz-dev \
-            default-libmysqlclient-dev \
+            libsqlite3-dev \
+            libpq-dev \
+            libmariadb-dev \
+            libmariadb-dev-compat \
             libdrogon-dev
 
       - name: Configure CMake
