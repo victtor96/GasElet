@@ -67,7 +67,8 @@ jobs:
             libmariadb-dev \
             libmariadb-dev-compat \
             libbrotli-dev \
-            libdrogon-dev
+            libdrogon-dev \
+            libhiredis-dev
 
       - name: Configure CMake
         run: |
