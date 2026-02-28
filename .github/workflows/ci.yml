@@ -62,10 +62,11 @@ jobs:
             libcrypt-dev \
             uuid-dev \
             libz-dev \
+            default-libmysqlclient-dev \
             libdrogon-dev
 
       - name: Configure CMake
-        run: cmake -S server -B server/build-ci -G Ninja -DCMAKE_BUILD_TYPE=Release
+        run: cmake -S server -B server/build-ci -G Ninja -DCMAKE_BUILD_TYPE=Release -Wno-dev
 
       - name: Build backend
         run: cmake --build server/build-ci --parallel
