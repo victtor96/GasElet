@@ -70,7 +70,24 @@ jobs:
             libdrogon-dev
 
       - name: Configure CMake
-        run: cmake -S server -B server/build-ci -G Ninja -DCMAKE_BUILD_TYPE=Release -Wno-dev
+        run: |
+          rm -rf server/build-ci
+
+          # Descobre os paths reais das libs do brotli no runner
+          BROTLI_DEC="$(ldconfig -p | awk '/libbrotlidec\.so/{print $NF; exit}')"
+          BROTLI_ENC="$(ldconfig -p | awk '/libbrotlienc\.so/{print $NF; exit}')"
+          BROTLI_COM="$(ldconfig -p | awk '/libbrotlicommon\.so/{print $NF; exit}')"
+
+          echo "BROTLI_DEC=$BROTLI_DEC"
+          echo "BROTLI_ENC=$BROTLI_ENC"
+          echo "BROTLI_COM=$BROTLI_COM"
+          ls -la /usr/include/brotli || true
+
+          cmake -S server -B server/build-ci -G Ninja -DCMAKE_BUILD_TYPE=Release -Wno-dev \
+            -DBROTLIDEC_LIBRARY="$BROTLI_DEC" \
+            -DBROTLIENC_LIBRARY="$BROTLI_ENC" \
+            -DBROTLICOMMON_LIBRARY="$BROTLI_COM" \
+            -DBROTLI_INCLUDE_DIR=/usr/include
 
       - name: Build backend
         run: cmake --build server/build-ci --parallel
