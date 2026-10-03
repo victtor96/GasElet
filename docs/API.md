@@ -127,7 +127,7 @@ Payload:
 
 Response (`200`):
 
-- objeto com `status: "ok"`, séries totais, séries por cidade e parâmetros derivados (`doc`, `mcf`, `loTonPerTon`, etc.).
+- objeto com `status: "ok"`, séries totais, séries por cidade e parâmetros derivados (`doc`, `mcf`, `loTonPerTon`, `captacaoBiogasPct`, etc.). Cada linha anual traz `metanoTAno` (gerado) e `metanoRecuperadoTAno` (gerado × captação).
 
 ## Endpoint de JSON protegido
 

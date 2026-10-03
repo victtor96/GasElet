@@ -18,6 +18,7 @@ namespace {
     constexpr double kDefaultTaxaColetaPct = 100.0;
     constexpr double kDefaultGeracaoKgAnoHab = 328.3;
     constexpr double kDefaultKMetano = 0.05;
+    constexpr double kDefaultCaptacaoBiogasPct = 100.0;
 
     constexpr double kDocf = 0.5;
     constexpr double kMethaneFraction = 0.5;
@@ -209,9 +210,13 @@ namespace {
             return std::max(0.0, mcf);
         }
 
+        // MCF (IPCC 2006, Vol. 5, Tab. 3.1). "Parcial" e "Não gerenciado" são
+        // rótulos antigos, mantidos para cenários já salvos.
         const std::string gerenciamento = config.get("gerenciamento", "").asString();
-        if (gerenciamento == "Parcial") return 0.8;
-        if (gerenciamento == "Não gerenciado" || gerenciamento == "Nao gerenciado") return 0.4;
+        if (gerenciamento == "Não gerenciado - profundo (>=5 m)" || gerenciamento == "Parcial") return 0.8;
+        if (gerenciamento == "Não gerenciado - raso (<5 m)" ||
+            gerenciamento == "Não gerenciado" || gerenciamento == "Nao gerenciado") return 0.4;
+        if (gerenciamento == "Não categorizado") return 0.6;
         return 1.0;
     }
 
@@ -299,7 +304,7 @@ namespace {
             {
                 const double emission =
                     residue * kMetano * loTonPerTon *
-                    std::exp(kMetano * -1.0 * (static_cast<double>(targetYear - anoInicial)));
+                    std::exp(-kMetano * static_cast<double>(targetYear - year));
                 out[targetYear] += emission;
             }
         }
@@ -373,6 +378,8 @@ namespace {
         const double growthPct = parseJsonNumber(config["popCrescimentoAnualPct"], 0.0);
         const double growth = growthPct / 100.0;
         const double kMetano = parseJsonNumber(config["kMetano"], kDefaultKMetano);
+        const double captacao = std::clamp(
+            parseJsonNumber(config["captacaoBiogasPct"], kDefaultCaptacaoBiogasPct), 0.0, 100.0) / 100.0;
 
         const Composition comp = parseComposition(config);
         const double mcf = resolveMCF(config);
@@ -419,7 +426,9 @@ namespace {
         {
             const int year = totalRows[i]["ano"].asInt();
             auto it = totalMethaneByYear.find(year);
-            totalRows[i]["metanoTAno"] = (it != totalMethaneByYear.end()) ? it->second : 0.0;
+            const double metano = (it != totalMethaneByYear.end()) ? it->second : 0.0;
+            totalRows[i]["metanoTAno"] = metano;
+            totalRows[i]["metanoRecuperadoTAno"] = metano * captacao;
         }
 
         Json::Value cities(Json::arrayValue);
@@ -466,7 +475,9 @@ namespace {
             {
                 const int year = cityRows[i]["ano"].asInt();
                 auto it = cityMethaneByYear.find(year);
-                cityRows[i]["metanoTAno"] = (it != cityMethaneByYear.end()) ? it->second : 0.0;
+                const double metano = (it != cityMethaneByYear.end()) ? it->second : 0.0;
+                cityRows[i]["metanoTAno"] = metano;
+                cityRows[i]["metanoRecuperadoTAno"] = metano * captacao;
             }
 
             Json::Value cityOut;
@@ -485,6 +496,7 @@ namespace {
         out["kMetano"] = kMetano;
         out["doc"] = doc;
         out["mcf"] = mcf;
+        out["captacaoBiogasPct"] = captacao * 100.0;
         out["loTonPerTon"] = loTonPerTon;
         out["loM3PerTon"] = loM3PerTon;
         out["total"]["rows"] = totalRows;

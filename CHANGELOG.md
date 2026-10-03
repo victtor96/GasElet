@@ -17,3 +17,12 @@ e versionamento semântico.
 ### Changed
 
 - reorganização da documentação principal do projeto.
+- MCF segue a Tabela 3.1 do IPCC 2006 (1,0 / 0,8 / 0,4 / 0,6); rótulos antigos continuam aceitos.
+- captação de biogás (`captacaoBiogasPct`) passa a reduzir o metano disponível para geração (`metanoRecuperadoTAno`).
+- casas atendidas e comparação de geradores usam a energia gerada (limitada pela potência nominal).
+- período padrão unificado em 2000–2060 em todas as telas; modelo do aterro centralizado em `client/src/utils/landfillModel.js`.
+
+### Fixed
+
+- decaimento de primeira ordem do metano usava o ano inicial do aterro em vez do ano de deposição, subestimando a produção.
+- telas de Metano e Energia descartavam `gerenciamento`, fazendo o MCF ser sempre 1,0.

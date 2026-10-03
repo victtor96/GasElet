@@ -3,6 +3,13 @@ import "../styles/Rsu.css";
 import { ResponsiveLine } from "@nivo/line";
 import { useDashboard } from "../context/DashboardContext.jsx";
 import { calcRsuTonAno } from "../utils/rsuProduction.js";
+import {
+  DEFAULT_ANO_FINAL,
+  DEFAULT_ANO_INICIAL,
+  DEFAULT_COMPOSICAO,
+  MCF_OPTIONS,
+  computeLoTonPerTon,
+} from "../utils/landfillModel.js";
 
 const API_BASE =
   (import.meta.env.VITE_API_BASE || "").replace(/\/+$/, "") ||
@@ -36,8 +43,8 @@ function makeDefaultDraft() {
     taxaColetaPct: null,
     regiao: "Nordeste",
     geracaoKgAnoHab: null,
-    vidaInicio: 2015,
-    vidaFim: 2035,
+    vidaInicio: DEFAULT_ANO_INICIAL,
+    vidaFim: DEFAULT_ANO_FINAL,
 
     // Produção
     captacaoBiogasPct: 100,
@@ -46,17 +53,7 @@ function makeDefaultDraft() {
     kMetano: 0.05,
 
     // Composição
-    composicao: {
-      papel: 17.1,
-      plastico: 10.8,
-      madeira: 4.7,
-      vidro: 3.3,
-      outros: 13.0,
-      organica: 44.9,
-      texteis: 2.6,
-      metal: 2.9,
-      borracha: 0.7,
-    },
+    composicao: { ...DEFAULT_COMPOSICAO },
 
     // Série
     popBase: 499990,
@@ -148,7 +145,7 @@ export default function Rsu() {
     return () => window.removeEventListener("resize", update);
   }, []);
 
-  const YEARS = useMemo(() => rangeYears(2000, 2060), []);
+  const YEARS = useMemo(() => rangeYears(DEFAULT_ANO_INICIAL, DEFAULT_ANO_FINAL), []);
   const REGIOES = useMemo(
     () => [
       { id: "Norte", kgAnoHab: 320 },
@@ -338,26 +335,10 @@ export default function Rsu() {
   const deltaComposicao = useMemo(() => round1(100 - somaComposicao), [somaComposicao]);
   const compOk = useMemo(() => Math.abs(deltaComposicao) <= 0.2, [deltaComposicao]);
 
-  const loCalculado = useMemo(() => {
-    const gerenciamento = String(draft.gerenciamento || "");
-    const mcf =
-      gerenciamento === "Parcial"
-        ? 0.8
-        : gerenciamento === "Não gerenciado" || gerenciamento === "Nao gerenciado"
-          ? 0.4
-          : 1.0;
-
-    const doc =
-      (compNums.papel / 100) * 0.4 +
-      (compNums.organica / 100) * 0.15 +
-      (compNums.plastico / 100) * 0.0 +
-      (compNums.texteis / 100) * 0.24 +
-      (compNums.madeira / 100) * 0.43 +
-      (compNums.borracha / 100) * 0.39 +
-      ((compNums.metal / 100) + (compNums.vidro / 100) + (compNums.outros / 100)) * 0.01;
-
-    return mcf * doc * 0.5 * 0.5 * (16 / 12);
-  }, [draft.gerenciamento, compNums]);
+  const loCalculado = useMemo(
+    () => computeLoTonPerTon(compNums, String(draft.gerenciamento || "")),
+    [draft.gerenciamento, compNums]
+  );
 
   const normalizarComposicao = () => {
     const keys = Object.keys(compNums);
@@ -568,9 +549,14 @@ export default function Rsu() {
                     value={draft.gerenciamento}
                     onChange={(e) => setDraft((d) => ({ ...d, gerenciamento: e.target.value }))}
                   >
-                    <option>Gerenciado</option>
-                    <option>Parcial</option>
-                    <option>Não gerenciado</option>
+                    {!MCF_OPTIONS.some((o) => o.value === draft.gerenciamento) && (
+                      <option value={draft.gerenciamento}>{draft.gerenciamento} (antigo)</option>
+                    )}
+                    {MCF_OPTIONS.map((o) => (
+                      <option key={o.value} value={o.value}>
+                        {o.value} — MCF {o.mcf.toFixed(1)}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
@@ -744,7 +730,7 @@ export default function Rsu() {
 
               <div className="rsu-sum ok">
                 Lo calculado: <b>{fmt4(loCalculado)}</b>
-                <span className="rsu-lo-unit">CH4/t RSU</span>
+                <span className="rsu-lo-unit">t CH4/t RSU</span>
               </div>
             </div>
           </div>

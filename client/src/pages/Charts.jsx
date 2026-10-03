@@ -4,31 +4,13 @@ import { GeoJSON, MapContainer, TileLayer } from "react-leaflet";
 import L from "leaflet";
 import { useDashboard } from "../context/DashboardContext.jsx";
 import { fetchLandfillCalculation } from "../utils/landfillCalcApi.js";
+import { DEFAULT_ANO_FINAL, normalizeLandfillConfig } from "../utils/landfillModel.js";
 import "../styles/Charts.css";
 
-const DEFAULT_CONFIG = {
-  regiao: "Nordeste",
-  geracaoKgAnoHab: 328.3,
-  taxaColetaPct: 100,
-  kMetano: 0.05,
-  vidaInicio: 2000,
-  vidaFim: 2060,
-  composicao: {
-    papel: 17.1,
-    organica: 44.9,
-    plastico: 10.8,
-    texteis: 2.6,
-    madeira: 4.7,
-    metal: 2.9,
-    vidro: 3.3,
-    borracha: 0.7,
-    outros: 13.0,
-  },
-};
 
 const IBGE_LOCALIDADES = "https://servicodados.ibge.gov.br/api/v1/localidades";
 const IBGE_MALHAS_V3 = "https://servicodados.ibge.gov.br/api/v3/malhas";
-const CALC_END_YEAR = 2060;
+const CALC_END_YEAR = DEFAULT_ANO_FINAL;
 const MUNICIPIOS_BY_UF_CACHE = new Map();
 
 function toNumber(v, fallback = 0) {
@@ -48,37 +30,6 @@ function cityKey(row) {
 
 function cityShortName(nome) {
   return String(nome).replace(/\s*\([A-Z]{2}\)\s*$/, "").trim();
-}
-
-function normalizeConfig(config) {
-  const merged = {
-    ...DEFAULT_CONFIG,
-    ...(config || {}),
-    composicao: {
-      ...DEFAULT_CONFIG.composicao,
-      ...(config?.composicao || {}),
-    },
-  };
-
-  return {
-    regiao: String(merged.regiao || DEFAULT_CONFIG.regiao),
-    geracaoKgAnoHab: toNumber(merged.geracaoKgAnoHab, DEFAULT_CONFIG.geracaoKgAnoHab),
-    taxaColetaPct: toNumber(merged.taxaColetaPct, DEFAULT_CONFIG.taxaColetaPct),
-    kMetano: toNumber(merged.kMetano, DEFAULT_CONFIG.kMetano),
-    vidaInicio: Math.round(toNumber(merged.vidaInicio, DEFAULT_CONFIG.vidaInicio)),
-    vidaFim: Math.round(toNumber(merged.vidaFim, DEFAULT_CONFIG.vidaFim)),
-    composicao: {
-      papel: toNumber(merged.composicao?.papel, DEFAULT_CONFIG.composicao.papel),
-      organica: toNumber(merged.composicao?.organica, DEFAULT_CONFIG.composicao.organica),
-      plastico: toNumber(merged.composicao?.plastico, DEFAULT_CONFIG.composicao.plastico),
-      texteis: toNumber(merged.composicao?.texteis, DEFAULT_CONFIG.composicao.texteis),
-      madeira: toNumber(merged.composicao?.madeira, DEFAULT_CONFIG.composicao.madeira),
-      metal: toNumber(merged.composicao?.metal, DEFAULT_CONFIG.composicao.metal),
-      vidro: toNumber(merged.composicao?.vidro, DEFAULT_CONFIG.composicao.vidro),
-      borracha: toNumber(merged.composicao?.borracha, DEFAULT_CONFIG.composicao.borracha),
-      outros: toNumber(merged.composicao?.outros, DEFAULT_CONFIG.composicao.outros),
-    },
-  };
 }
 
 function stableSerialize(value) {
@@ -424,7 +375,7 @@ export default function Charts() {
     [currentScenarioId, rsuByScenario]
   );
 
-  const config = useMemo(() => normalizeConfig(scenarioEntry?.config), [scenarioEntry?.config]);
+  const config = useMemo(() => normalizeLandfillConfig(scenarioEntry?.config), [scenarioEntry?.config]);
   const configSignature = useMemo(() => stableSerialize(config), [config]);
 
   const years = useMemo(() => {

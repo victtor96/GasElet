@@ -16,27 +16,9 @@ import { GeoJSON, MapContainer, TileLayer } from "react-leaflet";
 import L from "leaflet";
 import { useDashboard } from "../context/DashboardContext.jsx";
 import { fetchLandfillCalculation } from "../utils/landfillCalcApi.js";
+import { DEFAULT_ANO_FINAL, normalizeLandfillConfig } from "../utils/landfillModel.js";
 import "../styles/Energy.css";
 
-const DEFAULT_CONFIG = {
-  regiao: "Nordeste",
-  geracaoKgAnoHab: 328.3,
-  taxaColetaPct: 100,
-  kMetano: 0.05,
-  vidaInicio: 2000,
-  vidaFim: 2060,
-  composicao: {
-    papel: 17.1,
-    organica: 44.9,
-    plastico: 10.8,
-    texteis: 2.6,
-    madeira: 4.7,
-    metal: 2.9,
-    vidro: 3.3,
-    borracha: 0.7,
-    outros: 13.0,
-  },
-};
 
 const GENERATOR_TEMPLATES = [
   {
@@ -79,7 +61,7 @@ const GENERATOR_TEMPLATES = [
 
 const IBGE_LOCALIDADES = "https://servicodados.ibge.gov.br/api/v1/localidades";
 const IBGE_MALHAS_V3 = "https://servicodados.ibge.gov.br/api/v3/malhas";
-const CALC_END_YEAR = 2060;
+const CALC_END_YEAR = DEFAULT_ANO_FINAL;
 const ENERGY_SERIES_COLORS = ["#1b5e20", "#2e7d32", "#43a047", "#66bb6a", "#81c784", "#a5d6a7"];
 const DEFAULT_RESIDENTIAL_CONSUMPTION_KWH_MONTH = 180;
 
@@ -100,37 +82,6 @@ function cityKey(row) {
 
 function cityShortName(nome) {
   return String(nome).replace(/\s*\([A-Z]{2}\)\s*$/, "").trim();
-}
-
-function normalizeConfig(config) {
-  const merged = {
-    ...DEFAULT_CONFIG,
-    ...(config || {}),
-    composicao: {
-      ...DEFAULT_CONFIG.composicao,
-      ...(config?.composicao || {}),
-    },
-  };
-
-  return {
-    regiao: String(merged.regiao || DEFAULT_CONFIG.regiao),
-    geracaoKgAnoHab: toNumber(merged.geracaoKgAnoHab, DEFAULT_CONFIG.geracaoKgAnoHab),
-    taxaColetaPct: toNumber(merged.taxaColetaPct, DEFAULT_CONFIG.taxaColetaPct),
-    kMetano: toNumber(merged.kMetano, DEFAULT_CONFIG.kMetano),
-    vidaInicio: Math.round(toNumber(merged.vidaInicio, DEFAULT_CONFIG.vidaInicio)),
-    vidaFim: Math.round(toNumber(merged.vidaFim, DEFAULT_CONFIG.vidaFim)),
-    composicao: {
-      papel: toNumber(merged.composicao?.papel, DEFAULT_CONFIG.composicao.papel),
-      organica: toNumber(merged.composicao?.organica, DEFAULT_CONFIG.composicao.organica),
-      plastico: toNumber(merged.composicao?.plastico, DEFAULT_CONFIG.composicao.plastico),
-      texteis: toNumber(merged.composicao?.texteis, DEFAULT_CONFIG.composicao.texteis),
-      madeira: toNumber(merged.composicao?.madeira, DEFAULT_CONFIG.composicao.madeira),
-      metal: toNumber(merged.composicao?.metal, DEFAULT_CONFIG.composicao.metal),
-      vidro: toNumber(merged.composicao?.vidro, DEFAULT_CONFIG.composicao.vidro),
-      borracha: toNumber(merged.composicao?.borracha, DEFAULT_CONFIG.composicao.borracha),
-      outros: toNumber(merged.composicao?.outros, DEFAULT_CONFIG.composicao.outros),
-    },
-  };
 }
 
 function stableSerialize(value) {
@@ -178,6 +129,12 @@ function createGeneratorFromTemplate(template) {
     },
     `gen-${template.id}-${stamp}`
   );
+}
+
+// Metano efetivamente captado; respostas antigas do backend não trazem o campo.
+function recoveredMethane(row) {
+  const recuperado = Number(row?.metanoRecuperadoTAno);
+  return Number.isFinite(recuperado) ? recuperado : Number(row?.metanoTAno) || 0;
 }
 
 function generatorEnergyFromMethane(methaneTAno, generator) {
@@ -557,7 +514,7 @@ export default function Energy() {
     [currentScenarioId, rsuByScenario]
   );
 
-  const config = useMemo(() => normalizeConfig(scenarioEntry?.config), [scenarioEntry?.config]);
+  const config = useMemo(() => normalizeLandfillConfig(scenarioEntry?.config), [scenarioEntry?.config]);
   const configSignature = useMemo(() => stableSerialize(config), [config]);
 
   const years = useMemo(() => {
@@ -646,6 +603,7 @@ export default function Energy() {
         populacao: Number(calcRow?.pop) || 0,
         residuoTAno: Number(calcRow?.residuoTAno) || 0,
         metanoTAno: Number(calcRow?.metanoTAno) || 0,
+        metanoRecuperadoTAno: recoveredMethane(calcRow),
       };
     });
   }, [years, landfillCalc]);
@@ -658,7 +616,7 @@ export default function Energy() {
   const annualEnergyData = useMemo(
     () =>
       annualMethaneData.map((row) => {
-        const energy = generatorEnergyFromMethane(row.metanoTAno, activeGenerator);
+        const energy = generatorEnergyFromMethane(row.metanoRecuperadoTAno, activeGenerator);
         return {
           ...row,
           energiaPotencialMwh: energy.energiaPotencialKwh / 1000,
@@ -686,7 +644,7 @@ export default function Energy() {
         const cityRows = cityRowsByKey.get(key) || [];
         const selectedRow = cityRows.find((item) => Number(item?.ano) === selectedYear);
         const metanoTAno = Number(selectedRow?.metanoTAno) || 0;
-        const energy = generatorEnergyFromMethane(metanoTAno, activeGenerator);
+        const energy = generatorEnergyFromMethane(recoveredMethane(selectedRow), activeGenerator);
 
         return {
           key,
@@ -734,13 +692,13 @@ export default function Energy() {
   );
 
   const generatorComparisonData = useMemo(() => {
-    const methaneTAno = selectedYearTotals?.metanoTAno || 0;
+    const methaneTAno = selectedYearTotals?.metanoRecuperadoTAno || 0;
     return comparedGenerators.map((generator) => {
       const energy = generatorEnergyFromMethane(methaneTAno, generator);
       const energiaGeradaMwh = energy.energiaGeradaMwh;
       const energiaPotencialMwh = energy.energiaPotencialKwh / 1000;
       const limiteMwh = energy.limitePorPotenciaKwh / 1000;
-      const casasAtendidasAno = (energiaPotencialMwh * 1000) / annualResidentialConsumptionKwh;
+      const casasAtendidasAno = (energiaGeradaMwh * 1000) / annualResidentialConsumptionKwh;
       const utilizacaoPotenciaPct =
         limiteMwh > 0 ? (energiaGeradaMwh / limiteMwh) * 100 : 0;
       return {
@@ -772,8 +730,8 @@ export default function Energy() {
       annualMethaneData.map((row) => {
         const point = { ano: row.ano };
         comparedGenerators.forEach((generator) => {
-          const energy = generatorEnergyFromMethane(row.metanoTAno, generator);
-          point[generator.id] = energy.energiaPotencialKwh / 1000;
+          const energy = generatorEnergyFromMethane(row.metanoRecuperadoTAno, generator);
+          point[generator.id] = energy.energiaGeradaMwh;
         });
         return point;
       }),
@@ -810,7 +768,7 @@ export default function Energy() {
       annualEnergyData.map((row) => ({
         ...row,
         casasAtendidas:
-          (Number(row?.energiaPotencialMwh) || 0) * 1000 / annualResidentialConsumptionKwh,
+          (Number(row?.energiaGeradaMwh) || 0) * 1000 / annualResidentialConsumptionKwh,
       })),
     [annualEnergyData, annualResidentialConsumptionKwh]
   );
